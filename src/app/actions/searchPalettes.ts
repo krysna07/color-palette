@@ -77,7 +77,7 @@ export async function searchPalettesAction(category: string, keyword: string, li
         
         generatedFallback.push({
           id: `gen-semantic-${Date.now()}-${i}`,
-          name: `Rekomendasi Warna "${keyword || category}" #${i + 1}`,
+          name: error ? `Error: ${error.message || JSON.stringify(error)}` : `Rekomendasi Warna "${keyword || category}" #${i + 1}`,
           category: 'Rekomendasi Spesifik',
           source: 'generated',
           style_tags: ['semantic', kwRaw],
