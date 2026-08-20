@@ -1,3 +1,5 @@
+'use server';
+
 import { supabase } from '@/lib/supabase';
 import { generatePaletteFromSeed, getSemanticSeeds } from '@/lib/colorGenerator';
 
