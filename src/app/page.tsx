@@ -6,9 +6,11 @@ import ColorMatchCard from '@/components/ColorMatchCard';
 import SketsaRenderer from '@/components/SketsaRenderer';
 import { searchPalettesAction } from '@/app/actions/searchPalettes';
 import { Sparkles, Palette, Save, Plus, Database, RefreshCw, X } from 'lucide-react';
+import Link from 'next/link';
 
 export default function ColorMatchHome() {
   const [isSearching, setIsSearching] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [palettes, setPalettes] = useState<any[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [displayCount, setDisplayCount] = useState(96);
@@ -74,12 +76,13 @@ export default function ColorMatchHome() {
 
   // Initial load from Supabase and LocalStorage
   useEffect(() => {
-    loadPalettes('Semua', '', displayCount);
+    loadPalettes('Semua', '', 96);
     
     // Load local saved palettes
     const localSaved = localStorage.getItem('vibe_saved_palettes');
     if (localSaved) {
       try {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setSavedPalettes(JSON.parse(localSaved));
       } catch (e) {
         console.error("Gagal memuat palet lokal", e);
@@ -87,13 +90,13 @@ export default function ColorMatchHome() {
     }
   }, []);
 
-  const loadPalettes = async (category: string, query: string, count: number) => {
+  async function loadPalettes(category: string, query: string, count: number) {
     setIsSearching(true);
     const { palettes: data, totalCount: total } = await searchPalettesAction(category, query, count);
     setPalettes(data);
     setTotalCount(total);
     setIsSearching(false);
-  };
+  }
 
   const handleSearch = async (query: string, category: string) => {
     setCurrentQuery({ query, category });
@@ -134,10 +137,12 @@ export default function ColorMatchHome() {
             <Database className="w-3.5 h-3.5" />
             <span>{totalCount || 992} Palet di Supabase</span>
           </div>
-          <button className="text-sm font-semibold text-slate-500 hover:text-slate-900 transition-colors">Log In</button>
-          <button className="px-5 py-2.5 bg-slate-900 text-white text-sm font-bold rounded-xl hover:bg-slate-800 transition-all shadow-md">
+          <Link href="/login" className="text-sm font-semibold text-slate-500 hover:text-slate-900 transition-colors">
+            Log In
+          </Link>
+          <Link href="/register" className="px-5 py-2.5 bg-slate-900 text-white text-sm font-bold rounded-xl hover:bg-slate-800 transition-all shadow-md">
             Sign Up
-          </button>
+          </Link>
         </div>
       </nav>
 

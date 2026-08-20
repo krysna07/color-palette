@@ -5,18 +5,17 @@ import { Palette, ArrowRight, Mail } from "lucide-react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 
-export default function LoginPage() {
+export default function RegisterPage() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     
-    // TODO: Implementasi Supabase Auth disini
-    // const supabase = createClient();
-    // const { error } = await supabase.auth.signInWithPassword({ email, password });
+    // TODO: Implementasi Supabase Auth Register disini
     
     setTimeout(() => {
       setIsLoading(false);
@@ -34,7 +33,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4 selection:bg-slate-200">
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-md my-8">
         
         {/* Main Card */}
         <div className="bg-white p-8 sm:p-10 rounded-[2rem] border border-slate-200 shadow-xl">
@@ -43,13 +42,27 @@ export default function LoginPage() {
             <div className="w-12 h-12 bg-slate-900 rounded-xl flex items-center justify-center shadow-md mb-5">
               <Palette className="w-6 h-6 text-white" />
             </div>
-            <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 mb-2">Welcome Back</h1>
+            <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 mb-2">Create Account</h1>
             <p className="text-slate-500 text-sm text-center font-medium">
-              Log in to your account to access your color palettes.
+              Join us and start curating your perfect color palettes.
             </p>
           </div>
 
-          <form onSubmit={handleLogin} className="space-y-5">
+          <form onSubmit={handleRegister} className="space-y-5">
+            <div className="space-y-1.5">
+              <label className="block text-[13px] font-bold text-slate-700">
+                Full Name
+              </label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 transition-all shadow-sm"
+                placeholder="John Doe"
+                required
+              />
+            </div>
+
             <div className="space-y-1.5">
               <label className="block text-[13px] font-bold text-slate-700">
                 Email Address
@@ -65,14 +78,9 @@ export default function LoginPage() {
             </div>
             
             <div className="space-y-1.5">
-              <div className="flex justify-between items-center">
-                <label className="block text-[13px] font-bold text-slate-700">
-                  Password
-                </label>
-                <Link href="/forgot-password" className="text-[13px] font-bold text-slate-500 hover:text-slate-900 transition-colors">
-                  Forgot Password?
-                </Link>
-              </div>
+              <label className="block text-[13px] font-bold text-slate-700">
+                Password
+              </label>
               <input
                 type="password"
                 value={password}
@@ -92,7 +100,7 @@ export default function LoginPage() {
                 <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
               ) : (
                 <>
-                  Log In <ArrowRight className="w-4 h-4" />
+                  Sign Up <ArrowRight className="w-4 h-4" />
                 </>
               )}
             </button>
@@ -112,9 +120,9 @@ export default function LoginPage() {
           </div>
           
           <p className="mt-8 text-center text-[13px] font-semibold text-slate-500">
-            Don&apos;t have an account?{" "}
-            <Link href="/register" className="text-slate-900 hover:underline transition-colors">
-              Sign up
+            Already have an account?{" "}
+            <Link href="/login" className="text-slate-900 hover:underline transition-colors">
+              Sign in
             </Link>
           </p>
         </div>
@@ -124,6 +132,7 @@ export default function LoginPage() {
             <ArrowRight className="w-3 h-3 rotate-180" /> Back to Home
           </Link>
         </div>
+
       </div>
     </div>
   );

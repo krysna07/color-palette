@@ -60,10 +60,11 @@ export async function searchPalettesAction(category: string, keyword: string, li
       console.error("Database search error:", error);
     }
 
-    let results = dbPalettes || [];
+    const results = dbPalettes || [];
 
     // Semantic Generator Fallback if database results are fewer than 6
-    let generatedFallback: any[] = [];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const generatedFallback: any[] = [];
     if (results.length === 0 || (kwRaw && results.length < 6)) {
       const { seeds, defaultScheme } = getSemanticSeeds(kwRaw || category);
 
@@ -84,7 +85,7 @@ export async function searchPalettesAction(category: string, keyword: string, li
     }
 
     // Convert raw DB results to UI-friendly structure with contextual names
-    let formattedResults = results.map((item, index) => {
+    const formattedResults = results.map((item, index) => {
       const hexList: string[] = Array.isArray(item.colors) ? item.colors : [];
       
       let contextualName = item.name;

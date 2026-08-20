@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { createClient } from '@supabase/supabase-js';
 import fetch from 'node-fetch';
 import * as dotenv from 'dotenv';
@@ -12,15 +13,15 @@ const supabase = createClient(
 function hexToHsl(hex: string): { h: number, s: number, l: number } {
   let cleanHex = hex.trim();
   if (!cleanHex.startsWith('#')) cleanHex = `#${cleanHex}`;
-  let r = parseInt(cleanHex.substring(1, 3), 16) / 255;
-  let g = parseInt(cleanHex.substring(3, 5), 16) / 255;
-  let b = parseInt(cleanHex.substring(5, 7), 16) / 255;
+  const r = parseInt(cleanHex.substring(1, 3), 16) / 255;
+  const g = parseInt(cleanHex.substring(3, 5), 16) / 255;
+  const b = parseInt(cleanHex.substring(5, 7), 16) / 255;
   
-  let max = Math.max(r, g, b), min = Math.min(r, g, b);
+  const max = Math.max(r, g, b), min = Math.min(r, g, b);
   let h = 0, s = 0, l = (max + min) / 2;
 
   if (max !== min) {
-    let d = max - min;
+    const d = max - min;
     s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
     switch (max) {
       case r: h = (g - b) / d + (g < b ? 6 : 0); break;
@@ -41,7 +42,7 @@ function analyzePalette(hexColors: string[]) {
   const vibrantColor = [...hslColors].sort((a, b) => b.s - a.s)[0];
   const dominant_hue = vibrantColor ? vibrantColor.h : 0;
 
-  let tags: string[] = [];
+  const tags: string[] = [];
 
   if (avg_saturation > 50 && (dominant_hue < 45 || dominant_hue > 315)) tags.push('hangat');
   if (avg_saturation > 40 && dominant_hue > 160 && dominant_hue < 260) tags.push('sejuk', 'tenang');
@@ -83,9 +84,9 @@ function generateInteriorCuratedPalettes(): any[] {
 
   seedGroups.forEach((group) => {
     group.seeds.forEach((baseHex) => {
-      let r = parseInt(baseHex.substring(1, 3), 16);
-      let g = parseInt(baseHex.substring(3, 5), 16);
-      let b = parseInt(baseHex.substring(5, 7), 16);
+      const r = parseInt(baseHex.substring(1, 3), 16);
+      const g = parseInt(baseHex.substring(3, 5), 16);
+      const b = parseInt(baseHex.substring(5, 7), 16);
 
       for (let variation = 0; variation < 30; variation++) {
         const r1 = Math.min(255, Math.max(0, r + ((variation % 5) - 2) * 12));
@@ -116,7 +117,7 @@ function generateInteriorCuratedPalettes(): any[] {
 
 async function importData() {
   console.log('Memulai Import Data...');
-  let rawPalettes: any[] = [];
+  const rawPalettes: any[] = [];
 
   try {
     console.log('Fetching 1000 nice-color-palettes...');
